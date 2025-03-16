@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // ユーザーを作成
+        $users = User::factory(5)->create();
+
+        // 各ユーザーに対して勤怠データを作成
+        $users->each(function ($user) {
+            Address::factory(1)->create(['user_id' => $user->user_id]);
+        });
     }
 }
